@@ -19,7 +19,7 @@ defmodule Pigeon.APNS.Notification do
   @moduledoc """
     Defines APNS notification struct and convenience constructor functions.
   """
-  defstruct device_token: nil, payload: %{"aps" => %{}}, expiration: nil, topic: nil, id: nil, priority: nil
+  defstruct device_token: nil, payload: %{"aps" => %{}, "stanza" => nil}, expiration: nil, topic: nil, id: nil, priority: nil
 
   def new(msg, token, topic \\ nil, data \\ nil) do
     %Pigeon.APNS.Notification{
@@ -29,11 +29,11 @@ defmodule Pigeon.APNS.Notification do
     }
   end
 
-  def new(msg, token, topic, id) do
+  def new(msg, token, topic, extra, id) do
     %Pigeon.APNS.Notification{
       device_token: token,
       topic: topic,
-      payload: %{"aps" => msg},
+      payload: %{"aps" => msg, "stanza" => extra},
       id: id
     }
   end
